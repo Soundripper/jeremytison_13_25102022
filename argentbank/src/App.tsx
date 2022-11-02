@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
-import SignIn from './pages/SignIn/SignIn';
-import User from './pages/User/User';
+import Login from './pages/Login/Login';
+import Profile from './pages/User/Profile';
 import './App.css';
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
       <Header />
         <Routes>
             <Route path="/" element={<Home />} > </Route>
-            <Route path="/sign-in" element={<SignIn />} > </Route>
-            <Route path="/user" element={<User />} > </Route>
+            <Route path="/login" element={<Login />} > </Route>
+            <Route path="/profile" element={<Profile />} > </Route>
         </Routes>
       <Footer />
     

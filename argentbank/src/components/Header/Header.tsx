@@ -8,7 +8,7 @@ const Header = () => {
 
     const location = useLocation();
     let navContent = () => {
-        if(location.pathname === "/user"){
+        if(location.pathname === "/profile"){
             return (
                 <nav className="main-nav">
                     <Link to="/" className="main-nav-logo">
@@ -19,7 +19,7 @@ const Header = () => {
                         />
                     </Link>
                     <div>
-                        <Link to="/user" className="main-nav-item">
+                        <Link to="/profile" className="main-nav-item">
                             <FontAwesomeIcon icon={faUserCircle} className="userCircle"/>
                             Tony
                         </Link>
@@ -42,7 +42,7 @@ const Header = () => {
                         />
                     </Link>
                     <div>
-                        <Link to="/sign-in" className="main-nav-item">
+                        <Link to="/login" className="main-nav-item">
                             <FontAwesomeIcon icon={faUserCircle} className="userCircle"/>
                             Sign In
                         </Link>
