@@ -5,6 +5,7 @@ import { login } from "../../utils/redux"
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../utils/redux";
 import {loginAuth} from "../../utils/authService"
+import {loginName} from "../../utils/authService"
 
 const SignInForm = () => {
     const [email, setUserName] = useState('tony@stark.com')
@@ -12,15 +13,18 @@ const SignInForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // dispatch(login({
-        //     username: email,
-        //     password: password,
-        //     // loggedIn: true
-        // }));
         // dispatch(userLogin({'email': 'tony@stark.com', 'password': 'password123' }));
-        loginAuth(email, password)
+        const user = await loginAuth(email, password);
+        const name = await loginName(user.body.token);
+        // console.log(user.body.token);
+        console.log(name);
+        dispatch(login({
+            // token: email,
+            // password: password,
+            // loggedIn: true
+        }));
         navigate('/profile');
     }
 

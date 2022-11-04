@@ -14,12 +14,12 @@ export const loginSlice = createSlice({
         token: null
       },
     reducers: {
-        // login: (state, action) => {
-        //     state.login = action.payload;
-        // },
-        // logout: (state, action) => {
-        //     state.login = null;
-        // }
+        login: (state, action) => {
+            state.token = action.payload;
+        },
+        logout: (state, action) => {
+            state.login = null;
+        }
     },
     // extraReducers: {
     //     [userLogin.fulfilled]: (state, action) => {
