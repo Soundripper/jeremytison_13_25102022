@@ -3,33 +3,35 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux/es/exports"
 import { login } from "../../utils/redux"
 import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../utils/redux";
 
 const SignInForm = () => {
-    const [username, setUserName] = useState('')
+    const [email, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleSubmit = (e:any) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(login({
-            username: username,
-            password: password,
-            // loggedIn: true
-        }));
+        // dispatch(login({
+        //     username: email,
+        //     password: password,
+        //     // loggedIn: true
+        // }));
+        dispatch(userLogin({'email': 'tony@stark.com', 'password': 'password123' }));
         navigate('/profile');
     }
 
-    useEffect (() => {
-        console.log("username = " + username);
-        console.log("password = " + password);
-    }, [password, username])
+    // useEffect (() => {
+    //     console.log("email = " + email);
+    //     console.log("password = " + password);
+    // }, [password, email])
 
     return (
         <form onSubmit = {(e) => handleSubmit(e)}>
             <div className="input-wrapper">
                 <label htmlFor="username">Username</label
-                ><input type="text" id="username" value={username} onChange={(e) => setUserName(e.target.value)}/>
+                ><input type="text" id="username" value={email} onChange={(e) => setUserName(e.target.value)}/>
             </div>
             <div className="input-wrapper">
                 <label htmlFor="password">Password</label
