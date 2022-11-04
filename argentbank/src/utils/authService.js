@@ -1,20 +1,36 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query'
-import { login, logout } from './authSlice'
+import axios from "axios";
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost/3001',
-  login: 'include',
-  prepareHeaders: (headers, {getState}) => {
-    const token = getState().auth.token
-    if (token) {
-      headers.set("authorization", 'Bearer ${token')
-    }
-    return headers
-  }
-})
+const API_URL = "http://localhost:3001/api/v1/";
 
-// const baseQueryWithReauth = async (args, api, extraOptions) => {
-//   let result = await baseQuery(args, api, extraOptions)
+// const register = (email, password) => {
+//   return axios.post(API_URL + "signup", {
+//     email,
+//     password,
+//   });
+// };
 
-//   if (result?.error?.originalStatus === 403)
-// }
+export const loginAuth = (email, password) => {
+  console.log(email, password);
+  return axios
+    .post(API_URL + "user/login/", {
+      email,
+      password,
+    })
+    .then((response) => {
+      console.log(response.data.body);
+      if (response.data.body.token) {
+        localStorage.setItem("token", JSON.stringify(response.data.body.token));
+      }
+      return response.data;
+    });
+};
+
+export const logoutAuth = () => {
+  localStorage.removeItem("token");
+};
+
+// export default {
+//   // register,
+//   loginAuth,
+//   logoutAuth,
+// };

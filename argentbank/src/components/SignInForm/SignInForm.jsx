@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux/es/exports"
 import { login } from "../../utils/redux"
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../utils/redux";
+import {loginAuth} from "../../utils/authService"
 
 const SignInForm = () => {
-    const [email, setUserName] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setUserName] = useState('tony@stark.com')
+    const [password, setPassword] = useState('password123')
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -18,7 +19,8 @@ const SignInForm = () => {
         //     password: password,
         //     // loggedIn: true
         // }));
-        dispatch(userLogin({'email': 'tony@stark.com', 'password': 'password123' }));
+        // dispatch(userLogin({'email': 'tony@stark.com', 'password': 'password123' }));
+        loginAuth(email, password)
         navigate('/profile');
     }
 
