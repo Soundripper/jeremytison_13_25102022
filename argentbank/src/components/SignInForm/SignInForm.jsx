@@ -8,8 +8,8 @@ import {loginAuth} from "../../utils/authService"
 import {loginName} from "../../utils/authService"
 
 const SignInForm = () => {
-    const [email, setUserName] = useState('tony@stark.com')
-    const [password, setPassword] = useState('password123')
+    const [email, setUserName] = useState('steve@rogers.com')
+    const [password, setPassword] = useState('password456')
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

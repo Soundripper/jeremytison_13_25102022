@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import Account from "../../components/Account/Account"
+import { store } from "../../utils/reduxService";
 
 const List = [
     {
@@ -16,14 +18,23 @@ const List = [
         amount: "$184.30",
         description: "Current Balance"
     },
-
 ]
 
+
 const Profile = () => {
+    const [userFirstName, userFirstNameSetState] = useState("");
+    const [userLastName, userSecondNameSetState] = useState("");
+
+    useEffect(() => {
+        const userInfo = store.getState();
+        userFirstNameSetState(userInfo.login.firstName);
+        userSecondNameSetState(userInfo.login.lastName);
+    }, [])
+
     return (
         <main className="main bg-dark">
             <div className="header">
-                <h1>Welcome back<br />Tony Jarvis!</h1>
+                <h1>Welcome back<br />{userFirstName} {userLastName}</h1>
                 <button className="edit-button">Edit Name</button>
             </div>
             <h2 className="sr-only">Accounts</h2>

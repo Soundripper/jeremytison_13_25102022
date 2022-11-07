@@ -47,6 +47,6 @@ export const store = configureStore({
     },
 })
 
-export const selectLogin = (state) => state.login.login;
+export const selectLogin = (state) => state.login;
 export const { loginReducer, logout } = loginSlice.actions;
 export default loginSlice.reducer;
