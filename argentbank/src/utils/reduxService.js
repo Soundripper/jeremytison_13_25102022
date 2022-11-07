@@ -14,7 +14,7 @@ export const loginSlice = createSlice({
         token: null
       },
     reducers: {
-        tokenReducer: (state, action) => {
+        loginReducer: (state, action) => {
             state.token = action.payload.token;
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
@@ -48,5 +48,5 @@ export const store = configureStore({
 })
 
 export const selectLogin = (state) => state.login.login;
-export const { tokenReducer, logout } = loginSlice.actions;
+export const { loginReducer, logout } = loginSlice.actions;
 export default loginSlice.reducer;
