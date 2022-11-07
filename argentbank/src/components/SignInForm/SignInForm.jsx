@@ -1,9 +1,9 @@
 // import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux/es/exports"
-import { login } from "../../utils/redux"
+import { tokenReducer } from "../../utils/reduxService"
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../../utils/redux";
+import { userLogin } from "../../utils/reduxService";
 import {loginAuth} from "../../utils/authService"
 import {loginName} from "../../utils/authService"
 
@@ -16,13 +16,15 @@ const SignInForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // dispatch(userLogin({'email': 'tony@stark.com', 'password': 'password123' }));
-        const user = await loginAuth(email, password);
-        const name = await loginName(user.body.token);
-        // console.log(user.body.token);
-        console.log(name);
-        dispatch(login({
-            // token: email,
-            // password: password,
+        const token = await loginAuth(email, password);
+        const userInfos = await loginName(token.body.token);
+        // console.log(token.body.token);
+        console.log(userInfos);
+        dispatch(tokenReducer({
+            token: token.body.token,
+            firstName: userInfos.body.firstName,
+            lastName: userInfos.body.lastName,
+            email: email
             // loggedIn: true
         }));
         navigate('/profile');
