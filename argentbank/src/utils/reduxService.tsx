@@ -11,7 +11,8 @@ export const loginSlice = createSlice({
         email: "",
         firstName: "",
         lastName: "",
-        token: null
+        token: null,
+        apiError: ""
       },
     reducers: {
         loginReducer: (state, action) => {
@@ -44,12 +45,11 @@ export const loginSlice = createSlice({
     //   },
 })
 
-export const store = configureStore({
-    reducer: {
-        login: loginSlice.reducer
-    },
-})
+// export const store = configureStore({
+//     reducer: {
+//         login: loginSlice.reducer
+//     },
+// })
 
-export const selectLogin = (state) => state.login;
 export const { loginReducer, logout } = loginSlice.actions;
 export default loginSlice.reducer;

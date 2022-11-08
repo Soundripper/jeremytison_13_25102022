@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
-import { store } from "../../utils/reduxService";
-import { useDispatch } from "react-redux";
-import { logout } from "../../utils/reduxService";
+// import { store } from "../../utils/reduxService";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLogin } from "../../redux/selectors/auth.selector";
+import { logoutAction } from "../../redux/actions/auth.actions";
 
 const Header = () => {
 
@@ -13,14 +14,15 @@ const Header = () => {
 
     const dispatch = useDispatch();
     const SignOutClick = () => {
-        dispatch(logout({
-            // loggedIn: true
-        }));
+        dispatch(logoutAction())
     }
+
+    const userInfo = useSelector(selectLogin)
     
     let navContent = () => {
-        const userInfo = store.getState();
-        console.log(userInfo.login.firstName);
+        // const userInfo = store.getState();
+        
+        // console.log(userInfo.login.firstName);
         
         if(location.pathname === "/profile"){
             return (
@@ -35,7 +37,7 @@ const Header = () => {
                     <div>
                         <Link to="/profile" className="main-nav-item">
                             <FontAwesomeIcon icon={faUserCircle} className="userCircle"/>
-                            {userInfo.login.firstName}
+                            {userInfo.firstName}
                         </Link>
                         <Link to="/" className="main-nav-item" onClick={SignOutClick}>
                             <FontAwesomeIcon icon={faSignOut} className="userCircle"/>

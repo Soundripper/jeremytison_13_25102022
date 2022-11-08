@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Account from "../../components/Account/Account"
-import { store } from "../../utils/reduxService";
+// import { store } from "../../utils/reduxService";
+import { selectLogin } from "../../redux/selectors/auth.selector";
 
 const List = [
     {
@@ -22,19 +24,15 @@ const List = [
 
 
 const Profile = () => {
-    const [userFirstName, userFirstNameSetState] = useState("");
-    const [userLastName, userSecondNameSetState] = useState("");
-
-    useEffect(() => {
-        const userInfo = store.getState();
-        userFirstNameSetState(userInfo.login.firstName);
-        userSecondNameSetState(userInfo.login.lastName);
-    }, [])
+    // const userInfo = store.getState(); uTILE DANS LE CAS D4UN COMPOSANT JS 5PAS REACT°
+    const userInfo = useSelector(selectLogin);
+    console.log(userInfo);
+    
 
     return (
         <main className="main bg-dark">
             <div className="header">
-                <h1>Welcome back<br />{userFirstName} {userLastName}</h1>
+                <h1>Welcome back<br />{userInfo.firstName} {userInfo.lastName}</h1>
                 <button className="edit-button">Edit Name</button>
             </div>
             <h2 className="sr-only">Accounts</h2>
