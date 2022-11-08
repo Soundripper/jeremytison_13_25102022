@@ -3,8 +3,7 @@ import { useState } from "react"
 import { useDispatch } from "react-redux/es/exports"
 // import { loginReducer } from "../../utils/reduxService"
 import { useNavigate } from "react-router-dom";
-import {loginAuth} from "../../utils/authService"
-import {loginName} from "../../utils/authService"
+import {loginAuth, loginName} from "../../utils/authService"
 import { succesfullLoginAction } from "../../redux/actions/auth.actions";
 
 const SignInForm = () => {
@@ -18,7 +17,7 @@ const SignInForm = () => {
         const token = await loginAuth(email, password);
         const userInfos = await loginName(token.body.token);
         // console.log(token.body.token);
-        console.log(userInfos);
+        // console.log(userInfos);
         dispatch(succesfullLoginAction({
             token: token.body.token,
             firstName: userInfos.body.firstName,

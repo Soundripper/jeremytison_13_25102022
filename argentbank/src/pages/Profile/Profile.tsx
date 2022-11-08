@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Account from "../../components/Account/Account"
 import EditName from "../../components/EditName/EditName";
@@ -27,7 +26,7 @@ const List = [
 const Profile = () => {
     // const userInfo = store.getState(); uTILE DANS LE CAS D4UN COMPOSANT JS 5PAS REACT°
     const userInfo = useSelector(selectLogin);
-    console.log(userInfo);
+    // console.log(userInfo);
     
 
     return (

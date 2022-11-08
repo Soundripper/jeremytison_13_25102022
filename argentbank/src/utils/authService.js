@@ -2,13 +2,6 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3001/api/v1/";
 
-// const register = (email, password) => {
-//   return axios.post(API_URL + "signup", {
-//     email,
-//     password,
-//   });
-// };
-
 export const loginAuth = (email, password) => {
   // console.log(email, password);
   return axios
@@ -33,12 +26,31 @@ export const loginName = (token) => {
     {token},
     {headers: {
       'Authorization': `Bearer ${token}`
-      }   
+    } 
     })
     .then((response) => {
-      console.log(response);
-      // if (response.data.body.token) {
-      //   localStorage.setItem("token", JSON.stringify(response.data.body.token));
+      // console.log(response);
+      return response.data;
+    });
+};
+
+export const editName = (firstname, lastname) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+  console.log(firstname);
+  console.log(lastname);
+  // console.log(token);
+  return axios
+    .put(API_URL + "user/profile/", 
+    {
+      firstName: firstname,
+      lastName: lastname
+    },
+    {headers: {
+      'Authorization': `Bearer ${token}`
+    }   
+    })
+    .then((response) => {
+      // console.log(response);orage.setItem("token", JSON.stringify(response.data.body.token));
       // }
       return response.data;
     });
@@ -47,9 +59,3 @@ export const loginName = (token) => {
 export const logoutAuth = () => {
   localStorage.removeItem("token");
 };
-
-// export default {
-//   // register,
-//   loginAuth,
-//   logoutAuth,
-// };
