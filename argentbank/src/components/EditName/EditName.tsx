@@ -3,21 +3,29 @@ import "../EditName/EditName.css"
 import { editName } from "../../utils/authService";
 import { succesfullLoginAction } from "../../redux/actions/auth.actions";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { selectLogin } from "../../redux/selectors/auth.selector";
 
 const EditName = () => {
+
+
 
     const [isOpened, setIsOpened] = useState(false);
     const [firstname, setFirstName] = useState('')
     const [lastname, setLastName] = useState('')
     const dispatch = useDispatch()
 
+    const userTodayInfo = useSelector(selectLogin);
+
     const toggle = () => {
         setIsOpened(isOpened => !isOpened);
-        console.log("toggle");
+        // console.log("toggle");
     }
 
     const handleSubmit = async (e:any) => {
         e.preventDefault();
+        console.log(userTodayInfo);
+        
         const userInfos = await editName(firstname, lastname);
         console.log(userInfos);
         dispatch(succesfullLoginAction({
@@ -38,10 +46,10 @@ const EditName = () => {
                 <form onSubmit = {(e) => handleSubmit(e)}>
                     <div className="nameEditInputs">
                         <div className="input-wrapper">
-                            <input type="text" id="firstname" placeholder={firstname} onChange={(e) => setFirstName(e.target.value)}/>
+                            <input type="text" id="firstname" placeholder={userTodayInfo.firstName} onChange={(e) => setFirstName(e.target.value)}/>
                         </div>
                         <div className="input-wrapper">
-                            <input type="text" id="lastname" placeholder={lastname} onChange={(e) => setLastName(e.target.value)}/>
+                            <input type="text" id="lastname" placeholder={userTodayInfo.lastName} onChange={(e) => setLastName(e.target.value)}/>
                         </div>
                     </div>
                     <div className="nameEditInputs">

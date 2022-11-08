@@ -20,7 +20,7 @@ export const loginAuth = (email, password) => {
 
 export const loginName = (token) => {
   // const token = localStorage.getItem("token");
-  console.log(token);
+  // console.log(token);
   return axios
     .post(API_URL + "user/profile/", 
     {token},

@@ -27,7 +27,6 @@ const Profile = () => {
     // const userInfo = store.getState(); uTILE DANS LE CAS D4UN COMPOSANT JS 5PAS REACT°
     const userInfo = useSelector(selectLogin);
     // console.log(userInfo);
-    
 
     return (
         <main className="main bg-dark">
