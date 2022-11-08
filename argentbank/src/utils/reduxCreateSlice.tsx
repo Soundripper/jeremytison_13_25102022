@@ -15,7 +15,7 @@ export const loginSlice = createSlice({
         apiError: ""
       },
     reducers: {
-        loginReducer: (state, action) => {
+        login: (state, action) => {
             state.token = action.payload.token;
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
@@ -45,11 +45,11 @@ export const loginSlice = createSlice({
     //   },
 })
 
-// export const store = configureStore({
-//     reducer: {
-//         login: loginSlice.reducer
-//     },
-// })
+export const store = configureStore({
+    reducer: {
+        login: loginSlice.reducer
+    },
+})
 
-export const { loginReducer, logout } = loginSlice.actions;
+export const { login, logout } = loginSlice.actions;
 export default loginSlice.reducer;
