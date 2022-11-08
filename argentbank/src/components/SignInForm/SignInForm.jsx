@@ -1,9 +1,8 @@
 // import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useDispatch } from "react-redux/es/exports"
 import { loginReducer } from "../../utils/reduxService"
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../../utils/reduxService";
 import {loginAuth} from "../../utils/authService"
 import {loginName} from "../../utils/authService"
 
@@ -15,7 +14,6 @@ const SignInForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // dispatch(userLogin({'email': 'tony@stark.com', 'password': 'password123' }));
         const token = await loginAuth(email, password);
         const userInfos = await loginName(token.body.token);
         // console.log(token.body.token);
@@ -29,11 +27,6 @@ const SignInForm = () => {
         }));
         navigate('/profile');
     }
-
-    // useEffect (() => {
-    //     console.log("email = " + email);
-    //     console.log("password = " + password);
-    // }, [password, email])
 
     return (
         <form onSubmit = {(e) => handleSubmit(e)}>

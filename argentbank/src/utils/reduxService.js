@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from "axios";
-import { useDispatch } from 'react-redux';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
+// import axios from "axios";
+// import { useDispatch } from 'react-redux';
 // import { createAction } from '@reduxjs/toolkit';
 
 export const loginSlice = createSlice({
@@ -22,6 +22,9 @@ export const loginSlice = createSlice({
         },
         logout: (state, action) => {
             state.token = null;
+            state.firstName = "";
+            state.lastName = "";
+            state.email = "";
         }
     },
     // extraReducers: {
