@@ -1,0 +1,12 @@
+.nameEditInputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.save-cancel-button{
+    width: 100px;
+    height: 30px;
+    color: blue;
+    border-color: blue;
+}

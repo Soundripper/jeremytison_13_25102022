@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Account from "../../components/Account/Account"
+import EditName from "../../components/EditName/EditName";
 // import { store } from "../../utils/reduxService";
 import { selectLogin } from "../../redux/selectors/auth.selector";
 
@@ -33,7 +34,7 @@ const Profile = () => {
         <main className="main bg-dark">
             <div className="header">
                 <h1>Welcome back<br />{userInfo.firstName} {userInfo.lastName}</h1>
-                <button className="edit-button">Edit Name</button>
+                <EditName/>
             </div>
             <h2 className="sr-only">Accounts</h2>
             {List.map((value, index) => (
