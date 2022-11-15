@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../EditName/EditName.css"
 import { editName } from "../../utils/authService";
-import { succesfullLoginAction } from "../../redux/actions/auth.actions";
+import { updateFullnameAction } from "../../redux/actions/auth.actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectLogin } from "../../redux/selectors/auth.selector";
 
 const EditName = () => {
-
-
 
     const [isOpened, setIsOpened] = useState(false);
     const [firstname, setFirstName] = useState('')
@@ -16,6 +14,13 @@ const EditName = () => {
     const dispatch = useDispatch()
 
     const userTodayInfo = useSelector(selectLogin);
+
+    useEffect(() => {
+        if (userTodayInfo) {
+            setFirstName(userTodayInfo.firstName)
+            setLastName(userTodayInfo.lastName)
+        }
+    },[userTodayInfo])
 
     const toggle = () => {
         setIsOpened(isOpened => !isOpened);
@@ -25,10 +30,9 @@ const EditName = () => {
     const handleSubmit = async (e:any) => {
         e.preventDefault();
         console.log(userTodayInfo);
-        
         const userInfos = await editName(firstname, lastname);
         console.log(userInfos);
-        dispatch(succesfullLoginAction({
+        dispatch(updateFullnameAction({
             firstName: firstname,
             lastName: lastname,
             // loggedIn: true
@@ -46,10 +50,10 @@ const EditName = () => {
                 <form onSubmit = {(e) => handleSubmit(e)}>
                     <div className="nameEditInputs">
                         <div className="input-wrapper">
-                            <input type="text" id="firstname" placeholder={userTodayInfo.firstName} onChange={(e) => setFirstName(e.target.value)}/>
+                            <input type="text" id="firstname" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
                         </div>
                         <div className="input-wrapper">
-                            <input type="text" id="lastname" placeholder={userTodayInfo.lastName} onChange={(e) => setLastName(e.target.value)}/>
+                            <input type="text" id="lastname" value={lastname} onChange={(e) => setLastName(e.target.value)}/>
                         </div>
                     </div>
                     <div className="nameEditInputs">

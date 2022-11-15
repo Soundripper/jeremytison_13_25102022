@@ -1,5 +1,5 @@
 import {  createReducer } from "@reduxjs/toolkit"
-import { succesfullLoginAction, logoutAction } from "../actions/auth.actions";
+import { succesfullLoginAction, logoutAction, updateFullnameAction } from "../actions/auth.actions";
 
 const initialState = {
     email: "",
@@ -22,4 +22,9 @@ export default createReducer(initialState, (builder) => {
         state.lastName = ""
         state.token = null
     })
+    .addCase(updateFullnameAction, (state, action) => {
+        state.firstName = action.payload.firstName
+        state.lastName = action.payload.lastName
+    })
+    
 });

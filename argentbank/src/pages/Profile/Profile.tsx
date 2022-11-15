@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
-import Account from "../../components/Account/Account"
+import Account from "../../components/Account/Account";
 import EditName from "../../components/EditName/EditName";
-// import { store } from "../../utils/reduxService";
 import { selectLogin } from "../../redux/selectors/auth.selector";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const List = [
     {
@@ -22,14 +23,23 @@ const List = [
     },
 ]
 
-
 const Profile = () => {
     // const userInfo = store.getState(); uTILE DANS LE CAS D4UN COMPOSANT JS 5PAS REACT°
     const userInfo = useSelector(selectLogin);
+    const navigate = useNavigate();
     // console.log(userInfo);
+
+    useEffect(() => {
+        console.log(userInfo);
+        
+        if(!userInfo || !userInfo.token){
+        return navigate("/login");
+        }
+    },[userInfo])
 
     return (
         <main className="main bg-dark">
+            
             <div className="header">
                 <h1>Welcome back<br />{userInfo.firstName} {userInfo.lastName}</h1>
                 <EditName/>

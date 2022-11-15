@@ -36,8 +36,8 @@ export const loginName = (token) => {
 
 export const editName = (firstname, lastname) => {
   const token = JSON.parse(localStorage.getItem("token"));
-  console.log(firstname);
-  console.log(lastname);
+  // console.log(firstname);
+  // console.log(lastname);
   // console.log(token);
   return axios
     .put(API_URL + "user/profile/", 
