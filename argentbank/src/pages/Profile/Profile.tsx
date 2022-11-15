@@ -27,15 +27,12 @@ const Profile = () => {
     // const userInfo = store.getState(); uTILE DANS LE CAS D4UN COMPOSANT JS 5PAS REACT°
     const userInfo = useSelector(selectLogin);
     const navigate = useNavigate();
-    // console.log(userInfo);
 
     useEffect(() => {
-        console.log(userInfo);
-        
         if(!userInfo || !userInfo.token){
         return navigate("/login");
         }
-    },[userInfo])
+    },[navigate, userInfo])
 
     return (
         <main className="main bg-dark">

@@ -9,16 +9,12 @@ import { selectLogin } from "../../redux/selectors/auth.selector";
 const Login = () => {
     const userInfo = useSelector(selectLogin);
     const navigate = useNavigate();
-    // console.log(userInfo);
 
     useEffect(() => {
-        console.log(userInfo);
-        
         if(userInfo && userInfo.token){
-        //    return redirect("/login");
         return navigate("/profile");
         }
-    },[userInfo])
+    },[navigate, userInfo])
 
     return (
         <main className="main bg-dark">

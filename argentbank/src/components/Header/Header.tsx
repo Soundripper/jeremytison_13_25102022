@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
-// import { store } from "../../utils/reduxService";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLogin } from "../../redux/selectors/auth.selector";
 import { logoutAction } from "../../redux/actions/auth.actions";
@@ -17,14 +16,11 @@ const Header = () => {
         dispatch(logoutAction())
     }
 
-    const userInfo = useSelector(selectLogin)
+    const userInfo = useSelector(selectLogin);
     
     let navContent = () => {
-        // const userInfo = store.getState();
         
-        // console.log(userInfo.login.firstName);
-        
-        if(location.pathname === "/profile"){
+        if(location.pathname === "/profile" || userInfo.token){
             return (
                 <nav className="main-nav">
                     <Link to="/" className="main-nav-logo">

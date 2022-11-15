@@ -24,18 +24,14 @@ const EditName = () => {
 
     const toggle = () => {
         setIsOpened(isOpened => !isOpened);
-        // console.log("toggle");
     }
 
-    const handleSubmit = async (e:any) => {
+    const handleEditSubmit = async (e:any) => {
         e.preventDefault();
-        console.log(userTodayInfo);
-        const userInfos = await editName(firstname, lastname);
-        console.log(userInfos);
+        await editName(firstname, lastname);
         dispatch(updateFullnameAction({
             firstName: firstname,
             lastName: lastname,
-            // loggedIn: true
         }));
         toggle()
     }
@@ -47,7 +43,7 @@ const EditName = () => {
         )}
         {isOpened && (
             <div className="editNameForm">
-                <form onSubmit = {(e) => handleSubmit(e)}>
+                <form onSubmit = {(e) => handleEditSubmit(e)}>
                     <div className="nameEditInputs">
                         <div className="input-wrapper">
                             <input type="text" id="firstname" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
