@@ -6,7 +6,7 @@ const initialState = {
     firstName: "",
     lastName: "",
     token: null,
-    apiError: ''
+    apiError: false
 }
 
 export default createReducer(initialState, (builder) => {
@@ -15,21 +15,22 @@ export default createReducer(initialState, (builder) => {
         state.firstName = action.payload.firstName
         state.lastName = action.payload.lastName
         state.token = action.payload.token
-        state.apiError = ''
+        state.apiError = false
     })
     .addCase(logoutAction, (state, action) => {
         state.email = ""
         state.firstName = ""
         state.lastName = ""
         state.token = null
-        state.apiError = ''
+        state.apiError = false
     })
     .addCase(updateFullnameAction, (state, action) => {
         state.firstName = action.payload.firstName
         state.lastName = action.payload.lastName
-        state.apiError = ''
+        state.apiError = false
     })
     .addCase(apiErrorAction, (state, action) => {
         state.apiError = action.payload.apiError
+        state.apiError = true
     })
 });

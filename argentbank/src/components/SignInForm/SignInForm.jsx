@@ -16,8 +16,8 @@ const SignInForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = await loginAuth(email, password);
-        console.log(token.status);
-        if (token.status === 200){
+        // console.log(token);
+        if (token){
             const userInfos = await loginName(token.body.token);
             dispatch(succesfullLoginAction({
             token: token.body.token,
@@ -29,7 +29,7 @@ const SignInForm = () => {
         }
         else {
             setErrorApi(true)
-            console.log('Eeeeelllllssseeeee');
+            // console.log(token);
             dispatch(apiErrorAction({
                 apiError: token.data.status
             }));

@@ -5,12 +5,14 @@ import { updateFullnameAction } from "../../redux/actions/auth.actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectLogin } from "../../redux/selectors/auth.selector";
+import { apiErrorAction } from "../../redux/actions/auth.actions";
 
 const EditName = () => {
 
     const [isOpened, setIsOpened] = useState(false);
     const [firstname, setFirstName] = useState('')
     const [lastname, setLastName] = useState('')
+    const [errorApi, setErrorApi] = useState(false)
     const dispatch = useDispatch()
 
     const userTodayInfo = useSelector(selectLogin);
@@ -28,12 +30,25 @@ const EditName = () => {
 
     const handleEditSubmit = async (e:any) => {
         e.preventDefault();
-        await editName(firstname, lastname);
-        dispatch(updateFullnameAction({
-            firstName: firstname,
-            lastName: lastname,
-        }));
-        toggle()
+        const response = await editName(firstname, lastname);
+        if (response){
+            setErrorApi(false);
+            dispatch(apiErrorAction({
+                apiError: false
+            }));
+            dispatch(updateFullnameAction({
+                firstName: firstname,
+                lastName: lastname,
+            }));
+            toggle()
+        }
+        else {
+            setErrorApi(true);
+            dispatch(apiErrorAction({
+                apiError: true
+            }));
+        }
+        
     }
 
     return (
@@ -44,6 +59,12 @@ const EditName = () => {
         {isOpened && (
             <div className="editNameForm">
                 <form onSubmit = {(e) => handleEditSubmit(e)}>
+                    { (errorApi === true) && (
+                        <div>
+                        <h1 className="error">Erreur de connexion</h1>
+                        </div>
+                        )
+                    }
                     <div className="nameEditInputs">
                         <div className="input-wrapper">
                             <input type="text" id="firstname" value={firstname} onChange={(e) => setFirstName(e.target.value)}/>
