@@ -19,5 +19,9 @@ export const routesArray:RouteI[] = [
     {
         path: "/profile",
         component: <Profile />
+    },  
+    {
+        path: "*",
+        component: <Home />
     },   
 ]
