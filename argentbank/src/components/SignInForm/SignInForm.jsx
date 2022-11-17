@@ -24,30 +24,29 @@ const SignInForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = await loginAuth(email, password);
-        console.log('Token response :');
-        console.log(token);
-        if (token.status === 200){
-            const userInfos = await loginName(token.body.token);
+        const apiResponse = await loginAuth(email, password);
+        console.log(apiResponse);
+        if (apiResponse.status === 200){
+            const userInfos = await loginName(apiResponse.body.token);
             dispatch(succesfullLoginAction({
-            token: token.body.token,
+            token: apiResponse.body.token,
             firstName: userInfos.body.firstName,
             lastName: userInfos.body.lastName,
             email: email
             }));
             navigate('/profile');
         }
-        else if (token.code === "ERR_BAD_REQUEST"){
-            setErrorApi(token.code)
+        else if (apiResponse.code === "ERR_BAD_REQUEST"){
+            setErrorApi(apiResponse.code)
             dispatch(apiErrorAction({
-                apiError: token.code
+                apiError: apiResponse.code
             }));
         }
-        else if (token.code === 'ERR_NETWORK'){
+        else if (apiResponse.code === 'ERR_NETWORK'){
             dispatch(apiErrorAction({
-                apiError: token.code
+                apiError: apiResponse.code
             }));
-            setErrorApi(token.code)
+            setErrorApi(apiResponse.code)
             console.log('not 200 not 400');
         }
     }
