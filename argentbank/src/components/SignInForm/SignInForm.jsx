@@ -1,23 +1,33 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux/es/exports"
 import { useNavigate } from "react-router-dom";
 import {loginAuth, loginName} from "../../utils/authService"
 import { succesfullLoginAction } from "../../redux/actions/auth.actions";
 import { apiErrorAction } from "../../redux/actions/auth.actions";
-import '../SignInForm/SignInForm.css'
 
 const SignInForm = () => {
     const [email, setUserName] = useState('steve@rogers.com')
     const [password, setPassword] = useState('password456')
     const [errorApi, setErrorApi] = useState(false)
+    const [errorApiMessage, setErrorMessage] = useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (errorApi === "ERR_BAD_REQUEST") {
+            setErrorMessage('Utilisateur non reconnu') 
+        }
+        if (errorApi === 'ERR_NETWORK') {
+            setErrorMessage('Erreur de connexion') 
+        }
+    },[errorApi])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = await loginAuth(email, password);
-        // console.log(token);
-        if (token){
+        console.log('Token response :');
+        console.log(token);
+        if (token.status === 200){
             const userInfos = await loginName(token.body.token);
             dispatch(succesfullLoginAction({
             token: token.body.token,
@@ -27,12 +37,18 @@ const SignInForm = () => {
             }));
             navigate('/profile');
         }
-        else {
-            setErrorApi(true)
-            // console.log(token);
+        else if (token.code === "ERR_BAD_REQUEST"){
+            setErrorApi(token.code)
             dispatch(apiErrorAction({
-                apiError: token.data.status
+                apiError: token.code
             }));
+        }
+        else if (token.code === 'ERR_NETWORK'){
+            dispatch(apiErrorAction({
+                apiError: token.code
+            }));
+            setErrorApi(token.code)
+            console.log('not 200 not 400');
         }
     }
     
@@ -51,7 +67,7 @@ const SignInForm = () => {
             </div>
             { errorApi && (
                 <div>
-                <h1 className="error">Erreur de connexion</h1>
+                <h1 className="error">{errorApiMessage}</h1>
                 </div>
                 )
             }

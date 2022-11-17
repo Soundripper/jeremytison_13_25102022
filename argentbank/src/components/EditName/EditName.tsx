@@ -12,7 +12,7 @@ const EditName = () => {
     const [isOpened, setIsOpened] = useState(false);
     const [firstname, setFirstName] = useState('')
     const [lastname, setLastName] = useState('')
-    const [errorApi, setErrorApi] = useState(false)
+    const [errorApi, setErrorApi] = useState('')
     const dispatch = useDispatch()
 
     const userTodayInfo = useSelector(selectLogin);
@@ -31,11 +31,10 @@ const EditName = () => {
     const handleEditSubmit = async (e:any) => {
         e.preventDefault();
         const response = await editName(firstname, lastname);
-        if (response){
-            setErrorApi(false);
-            dispatch(apiErrorAction({
-                apiError: false
-            }));
+        console.log(response);
+        
+        if (response.status === 200){
+            setErrorApi('');
             dispatch(updateFullnameAction({
                 firstName: firstname,
                 lastName: lastname,
@@ -43,9 +42,9 @@ const EditName = () => {
             toggle()
         }
         else {
-            setErrorApi(true);
+            setErrorApi(response.code);
             dispatch(apiErrorAction({
-                apiError: true
+                apiError: response.code
             }));
         }
         
@@ -59,7 +58,7 @@ const EditName = () => {
         {isOpened && (
             <div className="editNameForm">
                 <form onSubmit = {(e) => handleEditSubmit(e)}>
-                    { (errorApi === true) && (
+                    { (errorApi === 'ERR_NETWORK') && (
                         <div>
                         <h1 className="error">Erreur de connexion</h1>
                         </div>

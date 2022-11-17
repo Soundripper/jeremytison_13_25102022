@@ -31,6 +31,6 @@ export default createReducer(initialState, (builder) => {
     })
     .addCase(apiErrorAction, (state, action) => {
         state.apiError = action.payload.apiError
-        state.apiError = true
+        // state.apiError = true
     })
 });
