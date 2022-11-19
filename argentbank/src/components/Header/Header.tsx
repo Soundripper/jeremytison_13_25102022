@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLogin } from "../../redux/selectors/auth.selector";
 import { logoutAction } from "../../redux/actions/auth.actions";
+import { logoutAuth } from "../../utils/authService";
 
 const Header = () => {
 
@@ -14,6 +15,7 @@ const Header = () => {
     const dispatch = useDispatch();
     const SignOutClick = () => {
         dispatch(logoutAction())
+        logoutAuth()
     }
 
     const userInfo = useSelector(selectLogin);
