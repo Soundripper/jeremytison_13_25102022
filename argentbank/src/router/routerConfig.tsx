@@ -1,6 +1,7 @@
 import Home from "../pages/Home/Home";
 import Profile from "../pages/Profile/Profile"
 import Login from "../pages/Login/Login"
+import { Navigate } from 'react-router-dom';
 
 interface RouteI {
     path: string,
@@ -22,6 +23,6 @@ export const routesArray:RouteI[] = [
     },  
     {
         path: "*",
-        component: <Home />
+        component: <Navigate replace to="/"/>
     },   
 ]
