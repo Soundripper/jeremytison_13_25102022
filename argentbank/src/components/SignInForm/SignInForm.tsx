@@ -6,9 +6,9 @@ import { succesfullLoginAction } from "../../redux/actions/auth.actions";
 import { apiErrorAction } from "../../redux/actions/auth.actions";
 
 const SignInForm = () => {
-    const [email, setUserName] = useState('steve@rogers.com')
-    const [password, setPassword] = useState('password456')
-    const [errorApi, setErrorApi] = useState(false)
+    const [email, setUserName] = useState('')
+    const [password, setPassword] = useState('')
+    const [errorApi, setErrorApi] = useState('false')
     const [errorApiMessage, setErrorMessage] = useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const SignInForm = () => {
         }
     },[errorApi])
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:any) => {
         e.preventDefault();
         const apiResponse = await loginAuth(email, password);
         console.log(apiResponse);
