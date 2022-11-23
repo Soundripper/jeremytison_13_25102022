@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux/es/exports"
 import { useNavigate } from "react-router-dom";
-import {loginAuth, loginName} from "../../utils/authService"
+import { loginAuth, loginName } from "../../utils/authService"
 import { succesfullLoginAction } from "../../redux/actions/auth.actions";
+import { succesfullLoginActionNR } from "../../redux/actions/authNoRemember.actions";
 import { apiErrorAction } from "../../redux/actions/auth.actions";
 
 const SignInForm = () => {
-    const [email, setUserName] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setUserName] = useState('steve@rogers.com')
+    const [password, setPassword] = useState('password456')
     const [errorApi, setErrorApi] = useState('false')
     const [errorApiMessage, setErrorMessage] = useState('')
+    const [rememberMe, setRememberMe] = useState(false)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const rememberMeButtonToggle = (e:any) => {
+        setRememberMe(e.target.checked);
+    }
+
+    useEffect(() => {
+    },[rememberMe])
 
     useEffect(() => {
         if (errorApi === "ERR_BAD_REQUEST") {
@@ -28,12 +37,22 @@ const SignInForm = () => {
         console.log(apiResponse);
         if (apiResponse.status === 200){
             const userInfos = await loginName(apiResponse.body.token);
-            dispatch(succesfullLoginAction({
-            token: apiResponse.body.token,
-            firstName: userInfos.body.firstName,
-            lastName: userInfos.body.lastName,
-            email: email
-            }));
+            if (rememberMe === true){
+                dispatch(succesfullLoginAction({
+                    token: apiResponse.body.token,
+                    firstName: userInfos.body.firstName,
+                    lastName: userInfos.body.lastName,
+                    email: email
+                }));
+            }
+            else if(rememberMe === false){
+                dispatch(succesfullLoginActionNR({
+                    token: apiResponse.body.token,
+                    firstName: userInfos.body.firstName,
+                    lastName: userInfos.body.lastName,
+                    email: email
+                }));
+            }            
             navigate('/profile');
         }
         else if (apiResponse.code === "ERR_BAD_REQUEST"){
@@ -62,7 +81,7 @@ const SignInForm = () => {
                 <input type="password" id="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <div className="input-remember">
-                <input type="checkbox" id="remember-me" /><label htmlFor="remember-me">Remember me</label>
+                <input type="checkbox" id="remember-me" defaultChecked={false} onChange={(e) => rememberMeButtonToggle(e)}/><label htmlFor="remember-me">Remember me</label>
             </div>
             { errorApi && (
                 <div>

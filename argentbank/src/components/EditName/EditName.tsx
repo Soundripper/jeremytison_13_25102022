@@ -5,6 +5,7 @@ import { updateFullnameAction } from "../../redux/actions/auth.actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { selectLogin } from "../../redux/selectors/auth.selector";
+import { selectLoginNoRemember } from "../../redux/selectors/auth.selector";
 import { apiErrorAction } from "../../redux/actions/auth.actions";
 
 const EditName = () => {
@@ -16,13 +17,18 @@ const EditName = () => {
     const dispatch = useDispatch()
 
     const userTodayInfo = useSelector(selectLogin);
+    const userTodayInfoNR = useSelector(selectLoginNoRemember);
 
     useEffect(() => {
-        if (userTodayInfo) {
+        if (userTodayInfo.firstName !== '') {
             setFirstName(userTodayInfo.firstName)
             setLastName(userTodayInfo.lastName)
         }
-    },[userTodayInfo])
+        else if(userTodayInfoNR.firstName !== ''){
+            setFirstName(userTodayInfoNR.firstName)
+            setLastName(userTodayInfoNR.lastName)
+        }
+    },[isOpened, userTodayInfo.firstName, userTodayInfo.lastName, userTodayInfoNR.firstName, userTodayInfoNR.lastName])
 
     const toggle = () => {
         setIsOpened(isOpened => !isOpened);
@@ -31,7 +37,7 @@ const EditName = () => {
     const handleEditSubmit = async (e:any) => {
         e.preventDefault();
         const response = await editName(firstname, lastname);
-        console.log(response);
+        // console.log(response);
         
         if (response.status === 200){
             setErrorApi('');

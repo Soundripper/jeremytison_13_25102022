@@ -60,5 +60,5 @@ export const editName = (firstname, lastname) => {
 };
 
 export const logoutAuth = () => {
-  localStorage.removeItem("token");
+  window.localStorage.clear();
 };
