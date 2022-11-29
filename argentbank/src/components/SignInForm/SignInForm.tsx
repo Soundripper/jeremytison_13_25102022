@@ -19,8 +19,8 @@ const SignInForm = () => {
         setRememberMe(e.target.checked);
     }
 
-    useEffect(() => {
-    },[rememberMe])
+    // useEffect(() => {
+    // },[rememberMe])
 
     useEffect(() => {
         if (errorApi === "ERR_BAD_REQUEST") {
