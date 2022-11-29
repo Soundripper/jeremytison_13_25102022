@@ -4,9 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faSignOut } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLogin, selectLoginNoRemember } from "../../redux/selectors/auth.selector";
+import { selectLogin } from "../../redux/selectors/auth.selector";
 import { logoutAction } from "../../redux/actions/auth.actions";
-import { logoutActionNR } from "../../redux/actions/authNoRemember.actions";
 import { logoutAuth } from "../../utils/authService";
 
 const Header = () => {
@@ -16,15 +15,13 @@ const Header = () => {
     const dispatch = useDispatch();
     const SignOutClick = () => {
         dispatch(logoutAction());
-        dispatch(logoutActionNR());
         logoutAuth();
     }
 
     const userInfo = useSelector(selectLogin);
-    const userInfoNR = useSelector(selectLoginNoRemember);
     
     let navContent = () => {
-        if(location.pathname === "/profile" || userInfo.token || userInfoNR.token){
+        if(location.pathname === "/profile" || userInfo.token){
             return (
                 <nav className="main-nav">
                     <Link to="/" className="main-nav-logo">
@@ -37,7 +34,7 @@ const Header = () => {
                     <div>
                         <Link to="/profile" className="main-nav-item">
                             <FontAwesomeIcon icon={faUserCircle} className="userCircle"/>
-                            {userInfo.firstName || userInfoNR.firstName}
+                            {userInfo.firstName}
                         </Link>
                         <Link to="/" className="main-nav-item" onClick={SignOutClick}>
                             <FontAwesomeIcon icon={faSignOut} className="userCircle"/>

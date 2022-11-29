@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux/es/exports"
 import { useNavigate } from "react-router-dom";
 import { loginAuth, loginName } from "../../utils/authService"
 import { succesfullLoginAction } from "../../redux/actions/auth.actions";
-import { succesfullLoginActionNR } from "../../redux/actions/authNoRemember.actions";
+// import { succesfullLoginActionNR } from "../../redux/actions/authNoRemember.actions";
 import { apiErrorAction } from "../../redux/actions/auth.actions";
 
 const SignInForm = () => {
@@ -18,9 +18,6 @@ const SignInForm = () => {
     const rememberMeButtonToggle = (e:any) => {
         setRememberMe(e.target.checked);
     }
-
-    // useEffect(() => {
-    // },[rememberMe])
 
     useEffect(() => {
         if (errorApi === "ERR_BAD_REQUEST") {
@@ -37,22 +34,13 @@ const SignInForm = () => {
         console.log(apiResponse);
         if (apiResponse.status === 200){
             const userInfos = await loginName(apiResponse.body.token);
-            if (rememberMe === true){
-                dispatch(succesfullLoginAction({
-                    token: apiResponse.body.token,
-                    firstName: userInfos.body.firstName,
-                    lastName: userInfos.body.lastName,
-                    email: email
-                }));
-            }
-            else if(rememberMe === false){
-                dispatch(succesfullLoginActionNR({
-                    token: apiResponse.body.token,
-                    firstName: userInfos.body.firstName,
-                    lastName: userInfos.body.lastName,
-                    email: email
-                }));
-            }            
+            dispatch(succesfullLoginAction({
+                token: apiResponse.body.token,
+                firstName: userInfos.body.firstName,
+                lastName: userInfos.body.lastName,
+                email: email,
+                rememberMe
+            }));         
             navigate('/profile');
         }
         else if (apiResponse.code === "ERR_BAD_REQUEST"){

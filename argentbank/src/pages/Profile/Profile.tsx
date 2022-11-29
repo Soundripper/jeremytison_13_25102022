@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import Account from "../../components/Account/Account";
 import EditName from "../../components/EditName/EditName";
 import { selectLogin } from "../../redux/selectors/auth.selector";
-import { selectLoginNoRemember } from "../../redux/selectors/auth.selector";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -27,14 +26,13 @@ const List = [
 const Profile = () => {
     // const userInfo = store.getState(); uTILE DANS LE CAS D4UN COMPOSANT JS 5PAS REACT°
     const userInfo = useSelector(selectLogin);
-    const userInfoNR = useSelector(selectLoginNoRemember)
     const navigate = useNavigate();
 
     useEffect(() => {
-        if((!userInfo || !userInfo.token) && (!userInfoNR || !userInfoNR.token)){
+        if((!userInfo || !userInfo.token)){
         return navigate("/login");
         }
-    },[navigate, userInfo, userInfoNR])
+    },[navigate, userInfo])
 
     return (
         <main className="main bg-dark">

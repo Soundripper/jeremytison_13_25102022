@@ -4,18 +4,17 @@ import SignInForm from "../../components/SignInForm/SignInForm";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectLogin, selectLoginNoRemember } from "../../redux/selectors/auth.selector";
+import { selectLogin } from "../../redux/selectors/auth.selector";
 
 const Login = () => {
     const userInfo = useSelector(selectLogin);
-    const userInfoNR = useSelector(selectLoginNoRemember);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if((userInfo && userInfo.token) || (userInfoNR && userInfoNR.token)){
+        if((userInfo && userInfo.token)){
         return navigate("/profile");
         }
-    },[navigate, userInfo, userInfoNR])
+    },[navigate, userInfo])
 
     return (
         <main className="main bg-dark">
