@@ -1,13 +1,15 @@
 swagger: '2.0'
 info:
-  title: Bank Argent API documentation
+  title: ArgentBank With Transactions API documentation
   description: Contains all available API endpoints in this codebase
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
-host: localhost:3001
-basePath: /api/v1
+# basePath: /api/v1
+host: virtserver.swaggerhub.com
 schemes:
-  - http
+ - https
+ - http
+
 paths:
   /user/login:
     post:
@@ -70,6 +72,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
@@ -93,6 +96,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
         - in: body
           name: body
           description: Update user profile attributes
@@ -110,11 +114,180 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+          
+  /transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Transactions
+      summary: User Transactions API
+      description: Get current month user transactions
+      parameters:
+        - in: query
+          name: startAt
+          required: false
+          type: string
+        - in: query
+          name: endAt
+          required: false
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: User transactions retrieved successully
+          schema:
+            type: 'array'
+            items: 
+              $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '401':
+          description: Authorization error
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '500':
+          description: Internal Server Error
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - User Transactions
+      summary: Create transaction
+      description: API for creating a transaction
+      parameters:
+        - in: body
+          name: body
+          description: Transaction fields
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionDetails'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: transaction created successully
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '401':
+          description: Authorization error
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '404':
+          description: Not found
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ApiResponse'
+  /transactions/{id}:
+    get:
+      tags:
+        - User Transactions
+      summary: User Transaction API
+      description: Get transaction details
+      parameters:
+        - in: path
+          name: 'id'
+          description: transaction id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction found
+          schema:
+            $ref: '#/definitions/TransactionDetails'
+        '401':
+          description: Invalid Fields
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '404':
+          description: Transaction not found
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ApiResponse'
+    put:
+      tags:
+        - User Transactions
+      summary: User Transaction API
+      description: Update transaction details
+      parameters:
+        - in: path
+          name: 'id'
+          description: transaction id
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction fields
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionDetails'
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: Transaction updated
+        '401':
+          description: Invalid Fields
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '404':
+          description: Transaction not found
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ApiResponse'
+    delete:
+      tags:
+        - User Transactions
+      summary: User Transaction API
+      description: Transaction deleted
+      parameters:
+        - in: path
+          name: 'id'
+          description: transaction id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: Transaction deleted
+        '401':
+          description: Invalid Fields
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '404':
+          description: Transaction not found
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ApiResponse'
+            
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
+    
 definitions:
   User:
     properties:
@@ -141,17 +314,8 @@ definitions:
   ApiResponse:
     type: object
     properties:
-      status:
-        type: integer
       message:
         type: string
-      body:
-        type: object
-        properties:
-          id:
-            type: string
-          email:
-            type: string
   LoginResponse:
     type: object
     properties:
@@ -164,3 +328,67 @@ definitions:
         type: string
       lastName:
         type: string
+        
+  Transaction:
+    type:
+      object
+    properties:
+      id:
+        type: number
+        description: transaction id
+        example: 5
+      date:
+        format: date
+        description: Transaction date
+        example: 2022-11-18
+      description:
+        type: string
+        description: Transaction description
+        example: "Transaction description"
+      amount:
+        type: number
+        description: Transaction amount
+        example: 22
+      balance:
+        type: number
+        description: After transaction balance
+        example: 2278
+  TransactionDetails:
+    type:
+      object
+    properties:
+      id:
+        type: number
+        description: transaction id
+        example: 5
+      date:
+        format: date
+        description: Transaction date
+        example: 2022-11-18
+      description:
+        type: string
+        description: Transaction description
+        example: "Transaction description"
+      amount:
+        type: number
+        description: Transaction amount
+        example: 22
+      balance:
+        type: number
+        description: After transaction balance
+        example: 2278
+      type:
+        type: string
+        description: Transaction type
+        example: "Electronic"
+      category:
+        type: string
+        description: Transaction category
+        example: "Food"
+      notes:
+        type: string
+        description: After transaction balance
+        example: "To fill the fridge"
+        
+# Added by API Auto Mocking Plugin
+basePath: /Soundripper/ArgentBank_withTransactions_api_documentation/1.0.0
