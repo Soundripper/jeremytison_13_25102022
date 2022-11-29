@@ -14,7 +14,6 @@ function App() {
   const loginRemember = useSelector(selectLogin);
   
   useEffect(() => {
-    console.log(loginRemember);
     if (!loginRemember.rememberMe){
       dispatch(logoutAction())
     }

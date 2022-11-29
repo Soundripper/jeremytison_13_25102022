@@ -11,12 +11,10 @@ export const loginAuth = (email, password) => {
       .then((response) => {
         if (response.data.body.token) {
           localStorage.setItem("token", JSON.stringify(response.data.body.token));
-          // console.log(response.data)
           return response.data;
         }
       })
       .catch((error) => {
-        console.log(error.message);
         return error
       })
 };

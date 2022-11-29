@@ -3,12 +3,11 @@ import { useDispatch } from "react-redux/es/exports"
 import { useNavigate } from "react-router-dom";
 import { loginAuth, loginName } from "../../utils/authService"
 import { succesfullLoginAction } from "../../redux/actions/auth.actions";
-// import { succesfullLoginActionNR } from "../../redux/actions/authNoRemember.actions";
 import { apiErrorAction } from "../../redux/actions/auth.actions";
 
 const SignInForm = () => {
-    const [email, setUserName] = useState('steve@rogers.com')
-    const [password, setPassword] = useState('password456')
+    const [email, setUserName] = useState('')
+    const [password, setPassword] = useState('')
     const [errorApi, setErrorApi] = useState('false')
     const [errorApiMessage, setErrorMessage] = useState('')
     const [rememberMe, setRememberMe] = useState(false)
@@ -31,7 +30,6 @@ const SignInForm = () => {
     const handleSubmit = async (e:any) => {
         e.preventDefault();
         const apiResponse = await loginAuth(email, password);
-        console.log(apiResponse);
         if (apiResponse.status === 200){
             const userInfos = await loginName(apiResponse.body.token);
             dispatch(succesfullLoginAction({
@@ -54,7 +52,6 @@ const SignInForm = () => {
                 apiError: apiResponse.code
             }));
             setErrorApi(apiResponse.code)
-            console.log('not 200 not 400');
         }
     }
     
